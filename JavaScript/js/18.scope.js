@@ -1,0 +1,4 @@
+//Scope
+//Alcance de variables
+
+
