@@ -16,6 +16,7 @@ const consultarAPIAsync = async () => {
     console.log(resultado2);
 
 }
+
 //Este es el que se debe utilizar
 const consultarAPIAsync2 = async () => {
     const [reps1, resp2] = await Promise.all([fetch(url), fetch(url2)]);
