@@ -1,14 +1,27 @@
 import {useState, useEffect} from 'react';
 import ComponenteError from './ComponenteError';
 
-const Formulario = ({pacientes, setPacientes}) => {
+const Formulario = ({pacientes, setPacientes, paciente}) => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
   const [alta, setAlta] = useState('');
   const [sintomas, setSintomas] = useState('');
-
   const [error, setError] = useState(false);
+
+  //Escucha los cambios que sucedan en alguna parte del state
+  useEffect(() => {
+    console.log(paciente);
+  },[paciente]);
+
+
+
+  const generarId = () => {
+    const random = Math.random().toString(36).substring(2);
+    const fecha = Date.now().toString(36);
+    
+    return random+fecha;
+  }
 
   const handleSubmit = (e) => {
     //Siempre se debe poner para evitar comportamiento por defecto
@@ -29,7 +42,8 @@ const Formulario = ({pacientes, setPacientes}) => {
       propietario,
       email,
       alta,
-      sintomas
+      sintomas,
+      id: generarId()
     }
 
     console.log(objetoPaciente);
