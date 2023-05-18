@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import ComponenteError from './ComponenteError';
 
-const Formulario = ({pacientes, setPacientes, paciente}) => {
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
@@ -11,10 +11,17 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
 
   //Escucha los cambios que sucedan en alguna parte del state
   useEffect(() => {
-    console.log(paciente);
+    if(Object.keys(paciente).length > 0){
+      console.log('Si hay algo');
+      setNombre(paciente.nombre);
+      setPropietario(paciente.propietario);
+      setEmail(paciente.email);
+      setAlta(paciente.alta);
+      setSintomas(paciente.sintomas);
+    }else{
+      console.log('Vacio');
+    }
   },[paciente]);
-
-
 
   const generarId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -42,13 +49,39 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
       email,
       alta,
       sintomas,
-      id: generarId()
+    }
+
+    if (paciente.id) {
+      //Editando el registro
+      console.log('Editando');
+
+      //Agrega el id que esta en memoria
+      objetoPaciente.id = paciente.id;
+
+      //Actualizar paciente
+      const pacientesActualizados = 
+        pacientes.map(pacienteState => 
+          pacienteState.id === paciente.id ? objetoPaciente : pacienteState);
+
+      setPacientes(pacientesActualizados);
+
+      //Limpia el formulario
+      setPaciente({});
+
+    }else{
+      //Nuevo registro
+      console.log('Nuevo registro');
+
+      //Como no tiene nuevo id se le genera
+      objetoPaciente.id = generarId();
+      
+      //Agrega un nuevo paciente
+      setPacientes([...pacientes, objetoPaciente]);
+
     }
 
     console.log(objetoPaciente);
 
-    //Agrega un nuevo paciente
-    setPacientes([...pacientes, objetoPaciente]);
 
     //Reiniciar el formulario
     setNombre('');
@@ -133,7 +166,7 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
 
           <input type="submit"
           className='bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all'
-          value='Agregar paciente' />
+          value={paciente.id ? 'Editar paciente':'Agregar paciente'}/>
         </form>
 
     </div>

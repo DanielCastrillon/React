@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 
 const Paciente = ({paciente, setPaciente}) => {
-    useEffect(() => {
-    console.log('Componente ok');
-  },[]);
 
   const {nombre} = paciente;
 

@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import Paciente from "./Paciente";
 
-
 const ListadoPacientes = ({pacientes, setPaciente}) => {
+  useEffect(() => {
+    if (pacientes.length > 0) {
+      console.log('Nuevo paciente');
+    }
+  }, [pacientes])
+  
 
 
   return (
