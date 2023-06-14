@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import MyDocument from "./MyDocument";
 
 const Paciente = ({paciente, setPaciente}) => {
 
@@ -38,6 +39,10 @@ const Paciente = ({paciente, setPaciente}) => {
                 onClick={()=>setPaciente(paciente)}>
                 Editar
             </button>
+
+            <PDFDownloadLink className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md' document={<MyDocument paciente={paciente}></MyDocument>} fileName="formulario.pdf">
+                <button >Descargar PDF</button>
+            </PDFDownloadLink>
 
             <button 
                 className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-lg" type="button">

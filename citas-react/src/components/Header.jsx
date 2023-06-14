@@ -6,7 +6,6 @@ const Header = () => {
                 Seguimiento Pacientes {''}
                 <span className="text-indigo-600">Veterinaria</span>
             </h1>
-
         </>
     )
 }

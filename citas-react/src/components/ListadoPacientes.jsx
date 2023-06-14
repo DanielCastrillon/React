@@ -7,6 +7,7 @@ const ListadoPacientes = ({pacientes, setPaciente}) => {
       console.log('Nuevo paciente');
     }
   }, [pacientes])
+
   
 
 
