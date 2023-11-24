@@ -14,6 +14,16 @@ export const Formulario = ({pacientes, setPacientes}) => {
 
   const [error, setError] = useState(false);
 
+  const generarId = () => {
+    let fecha = Date.now().toString(36)
+    let ramdom = Math.random().toString(36).substr(2)
+
+    return fecha + ramdom
+
+  }
+
+  generarId()
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -33,7 +43,8 @@ export const Formulario = ({pacientes, setPacientes}) => {
       propietario,
       email,
       fechaAlta,
-      sintomas
+      sintomas,
+      id: generarId()
     }
 
     //AGREGAR PACIENTES CON EL OPERADOR SPREAD
