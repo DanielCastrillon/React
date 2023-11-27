@@ -1,6 +1,9 @@
 import React from 'react'
 
-export const Paciente = ({paciente}) => {
+
+export const Paciente = ({paciente, setPaciente}) => {
+
+
   return (
     <div className="m-3 bg-white shadow-md px-5 py-10 rounded-xl">
       <p className="font-bold mb-3 text-gray-700 uppercase">
@@ -30,6 +33,7 @@ export const Paciente = ({paciente}) => {
         <button
           type='button'
           className='py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-md'
+          onClick={() => setPaciente(paciente)}
         >
           Editar
         </button>

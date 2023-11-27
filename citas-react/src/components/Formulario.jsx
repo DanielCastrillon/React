@@ -1,9 +1,8 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Error } from './Error';
 
-export const Formulario = ({pacientes, setPacientes}) => {
+export const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
 
   //useStates
   const [nombre, setNombre] = useState('');
@@ -14,6 +13,18 @@ export const Formulario = ({pacientes, setPacientes}) => {
 
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    if (Object.keys(paciente).length > 0) {
+      setNombre(paciente.nombre)
+      setPropietario(paciente.propietario)
+      setEmail(paciente.email)
+      setFechaAlta(paciente.fechaAlta)
+      setSintomas(paciente.sintomas)
+    }
+    
+  }, [paciente])
+  
+
   const generarId = () => {
     let fecha = Date.now().toString(36)
     let ramdom = Math.random().toString(36).substr(2)
@@ -21,6 +32,7 @@ export const Formulario = ({pacientes, setPacientes}) => {
     return fecha + ramdom
 
   }
+
 
   generarId()
 
@@ -37,18 +49,31 @@ export const Formulario = ({pacientes, setPacientes}) => {
 
     setError(false);
 
-    //OBJETO DE PACIEENTES
+    //OBJETO DE PACIENTES
     const objPacientes = {
       nombre,
       propietario,
       email,
       fechaAlta,
-      sintomas,
-      id: generarId()
+      sintomas
     }
 
-    //AGREGAR PACIENTES CON EL OPERADOR SPREAD
-    setPacientes([...pacientes, objPacientes]);
+    if (paciente.id) {
+      //EDITAR UN REGISTRO
+      objPacientes.id = paciente.id
+
+      const pacientesActualizados = pacientes.map(pacienteState => pacienteState.id === paciente.id ? objPacientes : pacienteState)
+
+      setPacientes(pacientesActualizados)
+      setPaciente({})
+
+    }else{
+      //NUEVO REGISTRO
+      //AGREGAR PACIENTES CON EL OPERADOR SPREAD
+      objPacientes.id = generarId()
+      setPacientes([...pacientes, objPacientes]);
+
+    }
 
     //REINICIAR EL FORMULARIO
     setNombre('')
@@ -124,7 +149,7 @@ export const Formulario = ({pacientes, setPacientes}) => {
           </div>
 
           <div className="mb-5">
-            <label htmlFor='sintomas' className='block text-gray-700 uppercase font-bold'>Fecha de alta</label>
+            <label htmlFor='sintomas' className='block text-gray-700 uppercase font-bold'>Sintomas</label>
             <textarea 
               name="sintomas"
               id="sintomas"
@@ -139,7 +164,7 @@ export const Formulario = ({pacientes, setPacientes}) => {
 
           <input 
             type="submit"
-            value="+ Agregar paciente"
+            value={paciente.id ? "Editar paciente":"+ Agregar paciente"}
             className='bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all rounded-md'
           />
           

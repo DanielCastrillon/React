@@ -1,9 +1,7 @@
 import React from 'react'
 import { Paciente } from './Paciente'
 
-export const ListadoPacientes = ({pacientes}) => {
-  console.log(pacientes);
-  
+export const ListadoPacientes = ({pacientes, setPaciente}) => {
 
   return (
     <>
@@ -23,6 +21,7 @@ export const ListadoPacientes = ({pacientes}) => {
                 <Paciente
                   key={paciente.id}
                   paciente={paciente}
+                  setPaciente={setPaciente}
                   />
               ))}
             </>
